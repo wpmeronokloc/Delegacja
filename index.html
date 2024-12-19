@@ -1,49 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>delegation the game</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
-  <title>delegation the game</title>
-</head>
-
-<body>
-  <div id="welcome-page">
-    <p>Witaj w delegation the game</p>
-    <button id="start-game">Start</button>
-  </div>
-  <main>
-    <div class="stats">
-      <p>Promile: <span id="promilText">0.0</span></p>
-      <p>HP: <span id="hpText">100</span></p>
-      <p>Pieniądze: <span id="moneyText">30</span></p>
+  <body>
+    <div id="welcome-page">
+      <p>Witaj w delegation the game</p>
+      <button id="start-game">Start</button>
     </div>
-    <div id="display">
-      <p id="displayText">
-        Witaj w Delegation the Game! Twoim celem jest zezgonować (osiagnąć 3
-        promile). Zaczynasz na Barcelonie. Powodzenia!
-      </p>
-      <div id="displayImg">
-        &nbsp;
-        <img id="attack-gif" src="https://i.ibb.co/s6bSRtW/flash-effect.gif">
+    <main id="main">
+      <div class="stats">
+        <p>Promile: <span id="promilText">0.0</span></p>
+        <p>HP: <span id="hpText">100</span></p>
+        <p>Pieniądze: <span id="moneyText">30</span></p>
       </div>
-      <div id="enemy-stats">
-        <p>Promile: <span id="enemyPromilsText">10</span></p>
-        <p>HP: <span id="enemyHpText">10</span></p>
+      <div id="display">
+        <p id="displayText">
+          Witaj w Delegation the Game! Twoim celem jest zezgonować (osiagnąć 3
+          promile). Zaczynasz na Barcelonie. Powodzenia!
+        </p>
+        <div id="displayImg">
+          &nbsp;
+          <div id="enemy-container">
+            <img
+              id="enemy-img"
+              src="https://cdn.discordapp.com/attachments/800513230069563463/1318334639714074634/419220987_2726120417552456_7634860907058757948_n.png?ex=6763ec8f&is=67629b0f&hm=d4422a9bab9f9d6c71c3fa61d0b12f7bebf0825bd865ac8b74fde92020e8e06f&"
+            />
+            <img
+              id="attack-gif"
+              src="https://i.ibb.co/s6bSRtW/flash-effect.gif"
+            />
+          </div>
+        </div>
+        <div id="enemy-stats">
+          <p>Promile: <span id="enemyPromilsText">10</span></p>
+          <p>HP: <span id="enemyHpText">10</span></p>
+        </div>
       </div>
-    </div>
-    <div class="controls">
-      <button id="controls-btn-1" class="control-button">
-        Idź na przygodę
-      </button>
-      <button id="controls-btn-2" class="control-button">
-        Idź do Złotego Rogu
-      </button>
-      <button id="controls-btn-3" class="control-button">Pij</button>
-    </div>
-  </main>
-  <script src="script.js"></script>
-</body>
-
+      <div class="controls">
+        <button id="controls-btn-1" class="control-button">
+          Idź na przygodę
+        </button>
+        <button id="controls-btn-2" class="control-button">
+          Idź do Złotego Rogu
+        </button>
+        <button id="controls-btn-3" class="control-button">Pij</button>
+      </div>
+    </main>
+    <script src="script.js"></script>
+  </body>
 </html>

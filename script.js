@@ -15,6 +15,8 @@ const hpText = document.getElementById("hpText");
 const moneyText = document.getElementById("moneyText");
 const enemyHpText = document.getElementById("enemyHpText");
 const enemyPromilsText = document.getElementById("enemyPromilsText");
+const enemyImg = document.getElementById("enemy-img");
+const main = document.getElementById("main");
 
 let promils = 0.0;
 let hp = 100;
@@ -32,11 +34,15 @@ let enemies = [
     name: "kasiak",
     hp: 50,
     promils: 1.3,
+    image:
+      "https://cdn.discordapp.com/attachments/800513230069563463/1318334639714074634/419220987_2726120417552456_7634860907058757948_n.png?ex=6763ec8f&is=67629b0f&hm=d4422a9bab9f9d6c71c3fa61d0b12f7bebf0825bd865ac8b74fde92020e8e06f&",
   },
   {
     name: "zbyszek",
     hp: 200,
     promils: 2.5,
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvswN4b61oRmZJTwvubjXE8sFhQyGRX5YV7g&s)",
   },
 ];
 
@@ -48,12 +54,12 @@ let items = [
   },
   {
     name: "wodka",
-    hp: -30,
+    hp: -15,
     promils: +0.5,
   },
 ];
 
-let inventory = ["piwo"];
+let inventory = ["piwo", "piwo"];
 
 let locations = [
   {
@@ -82,7 +88,8 @@ let locations = [
   },
   {
     name: "drink",
-    description: "Co chcesz wypic?\nTwój ekwipunek: ",
+    description:
+      "Uważaj, żeby sie nie zerzygać\nCo chcesz wypic?\nTwój ekwipunek: ",
     buttonText: ["wypij piwo", "wypij wodke", "przestan pic"],
     buttonDo: [useItem1, useItem2, goTown],
     background: "https://nasielsk.pl/files/image/Promocyjne/nasielsk_rynek.jpg",
@@ -137,19 +144,11 @@ function goDrink() {
 function fight1() {
   fight(0);
   currentEnemyIndex = 0;
-  displayImg.style.backgroundImage =
-    "url(https://cdn.discordapp.com/attachments/800513230069563463/1318334639714074634/419220987_2726120417552456_7634860907058757948_n.png?ex=6763ec8f&is=67629b0f&hm=d4422a9bab9f9d6c71c3fa61d0b12f7bebf0825bd865ac8b74fde92020e8e06f&)";
-  displayImg.style.backgroundSize = "cover";
-  displayImg.style.backgroundRepeat = "round";
 }
 
 function fight2() {
   fight(1);
   currentEnemyIndex = 1;
-  displayImg.style.backgroundImage =
-    "url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvswN4b61oRmZJTwvubjXE8sFhQyGRX5YV7g&s)";
-  displayImg.style.backgroundSize = "cover";
-  displayImg.style.backgroundRepeat = "round";
 }
 
 function fight(index) {
@@ -160,6 +159,8 @@ function fight(index) {
   enemyPromilsText.innerText = enemies[index].promils;
   currentEnemyHP = enemyHpText.innerText;
   currentEnemyPromils = enemyPromilsText.innerText;
+  enemyImg.style.display = "block";
+  enemyImg.src = enemies[index].image;
 }
 
 function attack() {
@@ -170,32 +171,69 @@ function attack() {
     attackDmg = Math.round(7 * promils * Math.floor(Math.random() * 5));
     currentEnemyHP -= attackDmg;
   }
+  if (attackDmg > 0) {
+    displayText.innerText = "Uderzasz za: " + attackDmg;
+    attackGif.style.display = "block"; // Pokaż GIF
+    setTimeout(() => {
+      attackGif.style.display = "none"; // wylacz gif po 0,5s
+    }, 400);
+    enemyImg.style.filter = "contrast(200%)";
+    enemyImg.style.scale = "0.9";
+    setTimeout(() => {
+      enemyImg.style.filter = "contrast(100%)";
+      enemyImg.style.scale = "1";
+    }, 100);
+  } else {
+    displayText.innerText = "Pudłujesz";
+  }
+  if (attackDmg >= 30) {
+    displayText.innerText = "Uderzasz krytycznie za: " + attackDmg;
+  }
   enemyHpText.innerText = Math.round(currentEnemyHP);
   enemyAttackDmg = Math.round(
-    Math.floor(Math.random() * currentEnemyPromils * 6)
+    Math.floor(Math.random() * 10 * currentEnemyPromils)
   );
-  hp -= enemyAttackDmg;
-  hpText.innerText = hp;
-  displayText.innerText =
-    "Uderzasz za: " + attackDmg + "\n Przeciwnik uderza za: " + enemyAttackDmg;
-  attackGif.style.display = "block"; // Pokaż GIF
+  if (enemyAttackDmg > 0) {
+    setTimeout(() => {
+      main.style.filter = "hue-rotate(+90deg)";
+      if (enemyAttackDmg >= 30) {
+        displayText.innerText +=
+          "\n Przeciwnik krytycznie uderza za: " + enemyAttackDmg;
+      } else {
+        displayText.innerText += "\n Przeciwnik uderza za: " + enemyAttackDmg;
+      }
+    }, 500);
+    setTimeout(() => {
+      main.style.filter = "hue-rotate(0deg)";
+    }, 600);
+  } else {
+    setTimeout(() => {
+      displayText.innerText += "\nPrzeciwnik pudłuje";
+    }, 500);
+  }
   setTimeout(() => {
-    attackGif.style.display = "none"; // wylacz gif po 0,5s
-  }, 400);
+    hp -= enemyAttackDmg;
+    hpText.innerText = hp;
+  }, 500);
+
   if (hp <= 0) {
-    update(6);
+    setTimeout(() => {
+      update(6);
+    }, 500);
   }
   if (currentEnemyHP <= 0) {
-    update(1);
-    enemyLoot = Math.round(
-      currentEnemyPromils * Math.floor(Math.random() * 70)
-    );
-    money += enemyLoot;
-    moneyText.innerText = money;
-    displayText.innerText =
-      "Zwyciestwo! Wrociles na barcelone.\nZdobyłeś: " +
-      enemyLoot +
-      "zł!\nRura po browary";
+    setTimeout(() => {
+      update(1);
+      enemyLoot = Math.round(
+        currentEnemyPromils * (Math.floor(Math.random() * 40) + 20)
+      );
+      money += enemyLoot;
+      moneyText.innerText = money;
+      displayText.innerText =
+        "Zwyciestwo! Wrociles na barcelone.\nZdobyłeś: " +
+        enemyLoot +
+        "zł!\nRura po browary";
+    }, 500);
   }
 }
 
@@ -235,6 +273,18 @@ function useItem(itemIndex) {
     if (promils >= 3) {
       update(5);
     }
+    let vomitChance = Math.random() * 5 * promils;
+    if (vomitChance > 9) {
+      displayText.innerText = "zrzygales sie, tracisz 1 promila i 30hp";
+      promils -= 1;
+      promilsText.innerText = Math.round(promils);
+      if (hp <= 50) {
+        hp = 1;
+      } else {
+        hp -= 30;
+      }
+      hpText.innerText = hp;
+    }
   } else {
     displayText.innerText = "nie masz tego w eq";
   }
@@ -271,4 +321,5 @@ function update(location) {
   displayImg.style.backgroundRepeat = "round";
   displayImg.style.backgroundImage =
     "url('" + locations[location].background + "')";
+  enemyImg.style.display = "none";
 }
