@@ -1,42 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>delegation the game</title>
-  </head>
-  <body>
-    <div id="welcome-page">
-      <p>Witaj w delegation the game</p>
-      <button id="start-game">Start</button>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>delegation the game</title>
+</head>
+
+<body>
+  <div id="welcome-page">
+    <p>Witaj w delegation the game</p>
+    <button id="start-game">Start</button>
+  </div>
+  <main>
+    <div class="stats">
+      <p>Promile: <span id="promilText">0.0</span></p>
+      <p>HP: <span id="hpText">100</span></p>
+      <p>Pieniądze: <span id="moneyText">30</span></p>
     </div>
-    <main>
-      <div class="stats">
-        <p>Promile: <span id="promilText">0.0</span></p>
-        <p>HP: <span id="hpText">100</span></p>
-        <p>Pieniądze: <span id="moneyText">30</span></p>
+    <div id="display">
+      <p id="displayText">
+        Witaj w Delegation the Game! Twoim celem jest zezgonować (osiagnąć 3
+        promile). Zaczynasz na Barcelonie. Powodzenia!
+      </p>
+      <div id="displayImg">
+        &nbsp;
+        <img id="attack-gif" src="https://i.ibb.co/s6bSRtW/flash-effect.gif">
       </div>
-      <div id="display">
-        <p id="displayText">
-          Witaj w Delegation the Game! Twoim celem jest zezgonować (osiagnąć 3
-          promile). Zaczynasz na Barcelonie. Powodzenia!
-        </p>
-        <div id="enemy-stats">
-          <p>Promile: <span id="enemyPromilsText">10</span></p>
-          <p>HP: <span id="enemyHpText">10</span></p>
-        </div>
+      <div id="enemy-stats">
+        <p>Promile: <span id="enemyPromilsText">10</span></p>
+        <p>HP: <span id="enemyHpText">10</span></p>
       </div>
-      <div class="controls">
-        <button id="controls-btn-1" class="control-button">
-          Idź na przygodę
-        </button>
-        <button id="controls-btn-2" class="control-button">
-          Idź do Złotego Rogu
-        </button>
-        <button id="controls-btn-3" class="control-button">Pij</button>
-      </div>
-    </main>
-    <script src="script.js"></script>
-  </body>
+    </div>
+    <div class="controls">
+      <button id="controls-btn-1" class="control-button">
+        Idź na przygodę
+      </button>
+      <button id="controls-btn-2" class="control-button">
+        Idź do Złotego Rogu
+      </button>
+      <button id="controls-btn-3" class="control-button">Pij</button>
+    </div>
+  </main>
+  <script src="script.js"></script>
+</body>
+
 </html>

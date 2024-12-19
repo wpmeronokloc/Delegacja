@@ -26,7 +26,7 @@
 
 main {
   background-color: rgb(11, 14, 102);
-  height: 400px;
+  height: 600px;
   width: 600px;
   margin: 50px auto;
   border: 5px solid black;
@@ -46,17 +46,34 @@ main {
 
 #display {
   background-color: white;
-  min-height: 250px;
+  min-height: 200px;
   position: relative;
-  font-size: 2rem;
+  font-size: 1.2rem;
   /* background-image: url(https://cdn.discordapp.com/attachments/800513230069563463/1318334639714074634/419220987_2726120417552456_7634860907058757948_n.png?ex=6763ec8f&is=67629b0f&hm=d4422a9bab9f9d6c71c3fa61d0b12f7bebf0825bd865ac8b74fde92020e8e06f&); */
+}
+
+#displayImg {
+  position: relative;
+  height: 350px;
+  background-color: white;
   background-size: cover;
   background-repeat: round;
+  background-image: url("https://nasielsk.pl/files/image/Promocyjne/nasielsk_rynek.jpg");
+}
+
+#displayImg img {
+  position: absolute;
+  height: 300px;
+  left: 100px;
+  top: 30px;
+  display: none;
 }
 
 #displayText {
+  height: 100px;
   padding: 10px;
-  line-height: 3rem;
+  font-size: fit-content;
+  overflow: hidden;
 }
 
 #enemy-stats {
@@ -81,7 +98,7 @@ main {
   width: 100%;
   justify-content: space-evenly;
   box-sizing: border-box;
-  padding-top: 15px;
+  padding-top: 5px;
 }
 
 .control-button {

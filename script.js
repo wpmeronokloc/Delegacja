@@ -6,7 +6,9 @@ const button1 = document.getElementById("controls-btn-1");
 const button2 = document.getElementById("controls-btn-2");
 const button3 = document.getElementById("controls-btn-3");
 const display = document.getElementById("display");
+const displayImg = document.getElementById("displayImg");
 const displayText = document.getElementById("displayText");
+const attackGif = document.getElementById("attack-gif");
 const enemyStats = document.getElementById("enemy-stats");
 const promilsText = document.getElementById("promilText");
 const hpText = document.getElementById("hpText");
@@ -38,6 +40,19 @@ let enemies = [
   },
 ];
 
+let items = [
+  {
+    name: "piwo",
+    hp: +10,
+    promils: +0.2,
+  },
+  {
+    name: "wodka",
+    hp: -30,
+    promils: +0.5,
+  },
+];
+
 let inventory = ["piwo"];
 
 let locations = [
@@ -47,42 +62,53 @@ let locations = [
       "Wyruszyłeś na przygodę i spotkałeś meneli, z którym chesz walczyć",
     buttonText: [enemies[0].name, enemies[1].name, "Idź na barcelone"],
     buttonDo: [fight1, fight2, goTown],
+    background:
+      "https://www.northernirishmaninpoland.com/wp-content/uploads/2023/08/368745081_690519115742468_7199314011439359797_n.jpg",
   },
   {
     name: "barcelona",
     description: "Jesteś na Barcelonie",
     buttonText: ["Idź na przygodę", "Idź do złotego rogu", "pij"],
     buttonDo: [goAdventure, goShop, goDrink],
+    background: "https://nasielsk.pl/files/image/Promocyjne/nasielsk_rynek.jpg",
   },
   {
     name: "shop",
-    description: "Jesteś w złotym rogu.\nTwoj ekwipunek: ",
+    description:
+      "Jesteś w złotym rogu.\nPiwo 10zł - +10HP +0.2promila\nWódka 20zł - -30hp + 0.5promila\nTwoj ekwipunek: ",
     buttonText: ["kup piwo", "kup wodke", "Idź na barcelone"],
     buttonDo: [buyItem1, buyItem2, goTown],
+    background: "https://i.ibb.co/4Zg7Gj3/Bez-tytu-u.png",
   },
   {
     name: "drink",
     description: "Co chcesz wypic?\nTwój ekwipunek: ",
     buttonText: ["wypij piwo", "wypij wodke", "przestan pic"],
-    buttonDo: [drinkItem1, drinkItem2, goTown],
+    buttonDo: [useItem1, useItem2, goTown],
+    background: "https://nasielsk.pl/files/image/Promocyjne/nasielsk_rynek.jpg",
   },
   {
     name: "fight",
     description: "walczysz z ",
     buttonText: ["wal na pizde", "unik", "uciekaj"],
     buttonDo: [attack, attack, goTown],
+    background: "https://mwfc.pl/wp-content/uploads/2038.jpg",
   },
   {
     name: "won",
     description: "gratulacje udalo ci sie zezgonowac",
     buttonText: ["reset", "reset", "reset"],
     buttonDo: [reset, reset, reset],
+    background:
+      "https://www.gov.pl/photo/format/2823fa7f-64c1-47a6-961c-15398f7edd58/resolution/1920x810",
   },
   {
     name: "przejebales",
-    description: "menel ci najebal lub przechlales sie",
+    description: "PRZEGRYWASZ\nmenel ci najebal lub przechlales sie",
     buttonText: ["reset", "reset", "reset"],
     buttonDo: [reset, reset, reset],
+    background:
+      "https://gazetanowodworska.com/wp-content/uploads/2020/07/nasielsk_poszukiwany-1200x1024.jpg",
   },
 ];
 
@@ -111,13 +137,19 @@ function goDrink() {
 function fight1() {
   fight(0);
   currentEnemyIndex = 0;
-  display.style.backgroundImage =
+  displayImg.style.backgroundImage =
     "url(https://cdn.discordapp.com/attachments/800513230069563463/1318334639714074634/419220987_2726120417552456_7634860907058757948_n.png?ex=6763ec8f&is=67629b0f&hm=d4422a9bab9f9d6c71c3fa61d0b12f7bebf0825bd865ac8b74fde92020e8e06f&)";
+  displayImg.style.backgroundSize = "cover";
+  displayImg.style.backgroundRepeat = "round";
 }
 
 function fight2() {
   fight(1);
   currentEnemyIndex = 1;
+  displayImg.style.backgroundImage =
+    "url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvswN4b61oRmZJTwvubjXE8sFhQyGRX5YV7g&s)";
+  displayImg.style.backgroundSize = "cover";
+  displayImg.style.backgroundRepeat = "round";
 }
 
 function fight(index) {
@@ -146,6 +178,10 @@ function attack() {
   hpText.innerText = hp;
   displayText.innerText =
     "Uderzasz za: " + attackDmg + "\n Przeciwnik uderza za: " + enemyAttackDmg;
+  attackGif.style.display = "block"; // Pokaż GIF
+  setTimeout(() => {
+    attackGif.style.display = "none"; // wylacz gif po 0,5s
+  }, 400);
   if (hp <= 0) {
     update(6);
   }
@@ -154,7 +190,6 @@ function attack() {
     enemyLoot = Math.round(
       currentEnemyPromils * Math.floor(Math.random() * 70)
     );
-    display.style.background = "white";
     money += enemyLoot;
     moneyText.innerText = money;
     displayText.innerText =
@@ -186,15 +221,15 @@ function buyItem2() {
   }
 }
 
-function drinkItem1() {
-  if (inventory.includes("piwo")) {
-    const index = inventory.indexOf("piwo");
+function useItem(itemIndex) {
+  if (inventory.includes(items[itemIndex].name)) {
+    const index = inventory.indexOf(items[itemIndex].name);
     if (index !== -1) {
       inventory.splice(index, 1);
     }
-    promils += 0.2;
+    promils += items[itemIndex].promils;
     promilsText.innerText = parseFloat(promils.toFixed(2));
-    hp += 10;
+    hp += items[itemIndex].hp;
     hpText.innerText = hp.toFixed(0);
     goDrink();
     if (promils >= 3) {
@@ -205,26 +240,12 @@ function drinkItem1() {
   }
 }
 
-function drinkItem2() {
-  if (inventory.includes("wodka")) {
-    const index = inventory.indexOf("wodka");
-    if (index !== -1) {
-      inventory.splice(index, 1);
-    }
-    promils += 0.5;
-    promilsText.innerText = parseFloat(promils.toFixed(2));
-    hp -= 30;
-    hpText.innerText = hp.toFixed(0);
-    goDrink();
-    if (promils >= 3) {
-      update(5);
-    }
-  } else {
-    displayText.innerText = "nie masz tego w eq";
-  }
-  if (hp <= 0) {
-    update(6);
-  }
+function useItem1() {
+  useItem(0);
+}
+
+function useItem2() {
+  useItem(1);
 }
 
 function reset() {
@@ -246,4 +267,8 @@ function update(location) {
   button2.onclick = locations[location].buttonDo[1];
   button3.onclick = locations[location].buttonDo[2];
   enemyStats.style.display = "none";
+  displayImg.style.backgroundSize = "cover";
+  displayImg.style.backgroundRepeat = "round";
+  displayImg.style.backgroundImage =
+    "url('" + locations[location].background + "')";
 }
